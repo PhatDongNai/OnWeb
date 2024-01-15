@@ -46,15 +46,11 @@ namespace OnLTWeb.Controllers
             return Json(new { products = _products }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult RenderProductByCatId(int CatId)
+        public ActionResult GetSanPhams(string filterValue)
         {
-            //List<SanPham> listSanPham = db.SanPhams.Where(a =>a.MaPhanLoai.Contains(CatId.ToString())).ToList();
+            List<SanPham> listSanPham = db.SanPhams.Where(a => a.MaPhanLoai.Contains(filterValue)).ToList();
 
-            string id = CatId.ToString();
-
-            List<SanPham> listSanPham = db.SanPhams.Where(a => a.MaPhanLoaiPhu.Contains(id)).ToList();
-
-            return PartialView("MainContent", listSanPham);
+            return PartialView("_PartialSanPham", listSanPham);
         }
 
         // GET: SanPhams/Details/5

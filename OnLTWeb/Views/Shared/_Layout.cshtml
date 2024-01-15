@@ -231,17 +231,30 @@
     <script src="~/Scripts/js/custom.js"></script>
 
     <script>
-$("button").click(function (e) {
-        var id = $(this).attr("id");
-        $.ajax({
-            /url: "RenderProductByCatId",/
-            url : '@Url.Action("RenderProductByCatId", "Dummy")',
-            data: { CatId: id },
-            success: function (response) {
-                $("div.container").html(response);
-            }
+        $(document).ready(function () {
+            $('.arrivals_grid_sorting li').on('click', function () {
+
+                // Lấy giá trị filter
+                var filterValue = $(this).attr('data-filter');
+
+                // Gửi Ajax request
+                $.ajax({
+                    url: '@Url.Action("GetSanPhams", "Home")',
+                    type: 'GET',
+                    data: { key: filterValue },
+                    success: function (data) {
+                        // Cập nhật danh sách sản phẩm
+                        $('#listSanPham').html(data);
+                        initIsotope();
+                        console.log(data);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
         });
-    });</script>
+    </script>
 </body>
 
 </html>
